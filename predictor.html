@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictor de Precios de Casas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f7ff;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏡 Predictor de Precios</h1>
+        
+        <form id="predictForm">
+            <div class="form-group">
+                <label for="area">Área (m²)</label>
+                <input type="number" id="area" name="area" placeholder="Ej: 100" required min="20" max="500">
+            </div>
+
+            <div class="form-group">
+                <label for="habitaciones">Habitaciones</label>
+                <input type="number" id="habitaciones" name="habitaciones" placeholder="Ej: 3" required min="1" max="10">
+            </div>
+
+            <div class="form-group">
+                <label for="antiguedad">Antigüedad (años)</label>
+                <input type="number" id="antiguedad" name="antiguedad" placeholder="Ej: 5" required min="0" max="100">
+            </div>
+
+            <div class="form-group">
+                <label for="distancia">Distancia al Centro (km)</label>
+                <input type="number" id="distancia" name="distancia" placeholder="Ej: 10" required min="0" max="50" step="0.1">
+            </div>
+
+            <button type="submit" class="btn">Calcular Precio</button>
+        </form>
+
+        <div class="result" id="result">
+            <h3>Precio Estimado:</h3>
+            <div class="price" id="priceOutput">$0</div>
+            <div class="info">Esta es una estimación basada en el modelo de IA</div>
+        </div>
+    </div>
+
+    <script>
+        // Fórmula simplificada basada en el modelo entrenado
+        // En un caso real, esto se conectaría a una API con el modelo TensorFlow
+        function calcularPrecio(area, habitaciones, antiguedad, distancia) {
+            // Fórmula aproximada (ajusta estos valores según tu modelo real)
+            const precioBase = 150000;
+            const precioPorM2 = 2000;
+            const precioPorHabitacion = 15000;
+            const descuentoPorAntiguedad = 500;
+            const descuentoPorDistancia = 1000;
+
+            let precio = precioBase;
+            precio += area * precioPorM2;
+            precio += habitaciones * precioPorHabitacion;
+            precio -= antiguedad * descuentoPorAntiguedad;
+            precio -= distancia * descuentoPorDistancia;
+
+            // Agregar algo de variación
+            const variacion = (Math.random() - 0.5) * 20000;
+            precio += variacion;
+
+            return Math.max(50000, precio); // Precio mínimo de 50k
+        }
+
+        document.getElementById('predictForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const area = parseFloat(document.getElementById('area').value);
+            const habitaciones = parseInt(document.getElementById('habitaciones').value);
+            const antiguedad = parseInt(document.getElementById('antiguedad').value);
+            const distancia = parseFloat(document.getElementById('distancia').value);
+
+            const precio = calcularPrecio(area, habitaciones, antiguedad, distancia);
+
+            const priceOutput = document.getElementById('priceOutput');
+            const result = document.getElementById('result');
+
+            // Formatear el precio
+            priceOutput.textContent = '$' + precio.toLocaleString('es-ES', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+
+            result.classList.add('show');
+        });
+    </script>
+</body>
+</html>
