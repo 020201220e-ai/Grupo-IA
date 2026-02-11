@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Comparativo: Sistemas Predictivos</title>
+    <!-- Fuentes Académicas: Merriweather (Serif) y Lato (Sans) -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Merriweather:wght@300;700;900&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <!-- Iconos Phosphor -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #0f172a;      /* Azul marino muy oscuro */
+            --accent: #2563eb;       /* Azul académico */
+            --text-main: #333333;    /* Gris oscuro lectura */
+            --text-light: #666666;   /* Gris medio */
+            --bg-paper: #ffffff;     /* Blanco papel */
+            --bg-section: #f8f9fa;   /* Gris muy tenue */
+            --border: #e2e8f0;       /* Borde sutil */
+            --code-bg: #f1f5f9;      /* Fondo código claro */
+            --chart-trad: #94a3b8;   /* Gris para tradicional */
+            --chart-ai: #2563eb;     /* Azul para IA */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #fdfdfd;
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* --- Tipografía --- */
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            color: var(--primary);
+        }
+
+        /* --- Header Académico --- */
+        header {
+            padding: 4rem 2rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-bottom: 2px solid var(--primary);
+            text-align: center;
+        }
+
+        .uni-ref {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            text-align: left;
+        }
+
+        .author-role {
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        /* --- Layout Principal --- */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .intro-text {
+            text-align: justify;
+            margin-bottom: 3rem;
+            column-count: 2;
+            column-gap: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .intro-text { column-count: 1; }
+        }
+
+        /* --- Comparativa --- */
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid var(--border);
+            margin-bottom: 4rem;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); /* Sombra muy sutil */
+        }
+
+        @media (max-width: 768px) {
+            .comparison-section { grid-template-columns: 1fr; }
+        }
+
+        .comp-col {
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .comp-col.left {
+            border-right: 1px solid var(--border);
+        }
+
+        .comp-col.right {
+            background-color: #fafbfc; /* Fondo muy ligeramente azulado */
+        }
+
+        .col-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .col-header h2 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        /* --- Elementos Gráficos SVG --- */
+        .visual-diagram {
+            height: 60px;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animación sutil de nodos para IA */
+        @keyframes pulse-node {
+            0% { r: 3; opacity: 0.5; }
+            50% { r: 4; opacity: 1; }
+            100% { r: 3; opacity: 0.5; }
+        }
+        
+        .ai-node {
+            animation: pulse-node 2s infinite ease-in-out;
+            fill: var(--accent);
+        }
+        
+        /* Animación de flujo */
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .ai-connection {
+            stroke: var(--accent);
+            stroke-width: 1;
+            opacity: 0.3;
+        }
+
+        .concept-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .concept-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Código Académico --- */
+        .code-snippet {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            background: var(--code-bg);
+            padding: 1rem;
+            border-left: 3px solid var(--accent); /* Borde lateral académico */
+            color: #24292e;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+
+        .comment { color: #6a737d; font-style: italic; }
+        .keyword { color: #d73a49; }
+        .function { color: #6f42c1; }
+        .variable { color: #005cc5; }
+
+        /* --- Nueva Sección: Gráficos de Resultados --- */
+        .results-chart-section {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: #fff;
+            border: 1px solid var(--border);
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chart-row {
+            display: grid;
+            grid-template-columns: 150px 1fr 80px;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        @media (max-width: 600px) {
+            .chart-row { grid-template-columns: 1fr; gap: 0.5rem; }
+        }
+
+        .chart-label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .bar-track {
+            height: 24px;
+            background: #f1f5f9;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0%; /* Start at 0 for animation */
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 0.75rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .bar-trad { background-color: var(--chart-trad); }
+        .bar-ai { background-color: var(--chart-ai); }
+
+        .chart-value {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        /* --- Sección Técnica --- */
+        .tech-specs {
+            background-color: #fff;
+            border-top: 2px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .spec-item h4 {
+            font-size: 0.95rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .spec-list {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .spec-list li {
+            margin-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .spec-val { font-family: 'Fira Code', monospace; color: var(--text-main); }
+        .spec-key { color: var(--text-light); }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #eef2ff;
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid #c7d2fe;
+            border-radius: 2px;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="uni-ref">Universidad Andina del Cusco | Facultad de Ingeniería y Arquitectura</div>
+        <h1>Análisis Comparativo: Programación Tradicional vs. Inteligencia Artificial</h1>
+        <p class="subtitle">Estudio de caso aplicado a la predicción de precios inmobiliarios</p>
+        
+        <div class="authors-grid">
+            <div>
+                <span class="author-role">Investigadores</span>
+                Morales Ttito Honorio<br>
+                Torres Cáceres Sayo Michael<br>
+                Zavaleta Luna Sebastian
+            </div>
+            <div>
+                <span class="author-role">Docente</span>
+                Mg. Ing. Hugo Espetia Huamanga
+            </div>
+            <div>
+                <span class="author-role">Asignatura</span>
+                Inteligencia Artificial (Grupo HABA)
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Resumen Ejecutivo -->
+        <div class="intro-text">
+            <p><strong>Resumen.</strong> Este documento presenta una comparación técnica entre los paradigmas de desarrollo de software tradicional y los sistemas basados en aprendizaje automático (Machine Learning). El estudio se centra en la implementación de un modelo de predicción de precios inmobiliarios.</p>
+            <p>Mientras que el enfoque tradicional requiere la definición explícita de reglas matemáticas, el enfoque inteligente utiliza Redes Neuronales Artificiales (Feedforward) para inferir patrones no lineales a partir de un conjunto de datos histórico, utilizando la librería TensorFlow.</p>
+        </div>
+
+        <!-- Tabla Comparativa Principal -->
+        <div class="comparison-section">
+            
+            <!-- Columna Izquierda: Tradicional -->
+            <div class="comp-col left">
+                <div class="col-header">
+                    <!-- SVG Diagram: Linear Regression (Static) -->
+                    <div class="visual-diagram">
+                        <svg width="50" height="50" viewBox="0 0 50 50">
+                            <line x1="5" y1="45" x2="45" y2="45" stroke="#333" stroke-width="2" />
+                            <line x1="5" y1="45" x2="5" y2="5" stroke="#333" stroke-width="2" />
+                            <!-- Puntos de datos -->
+                            <circle cx="15" cy="35" r="2" fill="#94a3b8" />
+                            <circle cx="25" cy="25" r="2" fill="#94a3b8" />
+                            <circle cx="35" cy="15" r="2" fill="#94a3b8" />
+                            <!-- Línea de regresión -->
+                            <line x1="5" y1="40" x2="45" y2="10" stroke="#2563eb" stroke-width="2" stroke-dasharray="4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Enfoque Tradicional</h2>
+                        <small style="color:var(--text-light)">Regresión Lineal Simple</small>
+                    </div>
+                </div>
+
+                <div class="concept-block">
+                    <div class="tag">Paradigma</div>
+                    <h3>Determinista / Paramétrico</h3>
+                    <p>Se basa en la causalidad directa. El programador debe conocer la relación exacta entre las variables (ej. tamaño de la casa) y el resultado (precio) para codificarla.</p>
+                </div>
+
+                <div class="concept-block">
+                    <div class="tag">Implementación</div>
+                    <h3>Lógica Explícita</h3>
+                    <p>Requiere mantenimiento manual de las reglas de negocio. No tolera bien el "ruido" en los datos.</p>
+                    <div class="code-snippet">
+<span class="comment"># Regla fija definida por humano</span>
+<span class="keyword">def</span> <span class="function">calcular_precio</span>(m2, habs):
+    base = 50000
+    <span class="comment"># Coeficientes estáticos</span>
+    <span class="keyword">return</span> base + (m2 * 1000)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: IA -->
+            <div class="comp-col right">
+                <div class="col-header">
+                    <!-- SVG Diagram: Neural Network (Animated) -->
+                    <div class="visual-diagram">
+                        <svg width="50" height="50" viewBox="0 0 50 50">
+                            <!-- Conexiones -->
+                            <line x1="10" y1="15" x2="25" y2="25" class="ai-connection" />
+                            <line x1="10" y1="35" x2="25" y2="25" class="ai-connection" />
+                            <line x1="25" y1="25" x2="40" y2="25" class="ai-connection" />
+                            <!-- Nodos Input -->
+                            <circle cx="10" cy="15" r="3" fill="#cbd5e1" />
+                            <circle cx="10" cy="35" r="3" fill="#cbd5e1" />
+                            <!-- Nodos Ocultos (Animados) -->
+                            <circle cx="25" cy="25" class="ai-node" style="animation-delay: 0s" />
+                            <!-- Nodo Output -->
+                            <circle cx="40" cy="25" class="ai-node" style="animation-delay: 0.5s" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Enfoque Inteligente</h2>
+                        <small style="color:var(--text-light)">Red Neuronal (Deep Learning)</small>
+                    </div>
+                </div>
+
+                <div class="concept-block">
+                    <div class="tag">Paradigma</div>
+                    <h3>Probabilístico / Aprendizaje Profundo</h3>
+                    <p>Utiliza Redes Neuronales Artificiales (RNA). El sistema infiere las reglas analizando miles de ejemplos (Input/Output).</p>
+                </div>
+
+                <div class="concept-block">
+                    <div class="tag">Implementación</div>
+                    <h3>Entrenamiento de Modelo</h3>
+                    <p>Se utiliza el algoritmo de Backpropagation para minimizar el error de predicción iterativamente.</p>
+                    <div class="code-snippet">
+<span class="comment"># La red descubre los coeficientes</span>
+model = tf.keras.Sequential([
+  layers.<span class="function">Dense</span>(64, activation=<span class="variable">'relu'</span>),
+  layers.<span class="function">Dense</span>(1)
+])
+model.<span class="function">fit</span>(datos, precios, epochs=100)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nueva Sección: Resultados Experimentales -->
+        <section class="results-chart-section">
+            <h3 style="margin-bottom: 0.5rem;"><i class="ph ph-chart-bar"></i> Resultados Experimentales</h3>
+            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 2rem;">
+                Comparativa del Error Cuadrático Medio (MSE) tras procesar el conjunto de datos de prueba.
+                <br><em>Nota: Un valor menor indica mayor precisión en la predicción de precios.</em>
+            </p>
+
+            <div class="chart-container">
+                <!-- Fila 1 -->
+                <div class="chart-row">
+                    <span class="chart-label">Modelo Tradicional</span>
+                    <div class="bar-track">
+                        <div class="bar-fill bar-trad" style="width: 85%">MSE Alto</div>
+                    </div>
+                    <span class="chart-value">15,400</span>
+                </div>
+                <!-- Fila 2 -->
+                <div class="chart-row">
+                    <span class="chart-label">Modelo IA (TensorFlow)</span>
+                    <div class="bar-track">
+                        <div class="bar-fill bar-ai" style="width: 15%">MSE Bajo</div>
+                    </div>
+                    <span class="chart-value">2,150</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Especificaciones Técnicas -->
+        <section class="tech-specs">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Especificaciones del Entorno Experimental</h2>
+            <div class="specs-grid">
+                <!-- Hardware -->
+                <div class="spec-item">
+                    <h4><i class="ph ph-cpu"></i> Hardware</h4>
+                    <ul class="spec-list">
+                        <li><span class="spec-key">CPU:</span> <span class="spec-val">Intel i7-10700K</span></li>
+                        <li><span class="spec-key">RAM:</span> <span class="spec-val">16 GB DDR4</span></li>
+                    </ul>
+                </div>
+                <!-- Software -->
+                <div class="spec-item">
+                    <h4><i class="ph ph-code"></i> Software Stack</h4>
+                    <ul class="spec-list">
+                        <li><span class="spec-key">Lang:</span> <span class="spec-val">Python 3.10</span></li>
+                        <li><span class="spec-key">Lib:</span> <span class="spec-val">TensorFlow 2.15</span></li>
+                    </ul>
+                </div>
+                <!-- Comandos -->
+                <div class="spec-item">
+                    <h4><i class="ph ph-terminal"></i> Ejecución</h4>
+                    <div class="code-snippet" style="background: #fff; border: none; padding: 0; margin:0;">
+$ python3 generador_datos.py
+$ python3 solucion_ia.py
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Documento generado para fines académicos &copy; 2026. Basado en el informe "Sistema tradicional vs sistema inteligente Final".</p>
+    </footer>
+
+    <script>
+        // Animación simple de las barras al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.bar-fill');
+            bars.forEach(bar => {
+                const targetWidth = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = targetWidth;
+                }, 300);
+            });
+        });
+    </script>
+
+</body>
+</html>
