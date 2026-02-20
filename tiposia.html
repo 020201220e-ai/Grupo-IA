@@ -3,540 +3,405 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informe Comparativo: Sistemas Predictivos</title>
-    <!-- Fuentes Académicas: Merriweather (Serif) y Lato (Sans) -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Merriweather:wght@300;700;900&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
-    <!-- Iconos Phosphor -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Evolución de la IA: De la Reacción a la Autonomía</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --primary: #0f172a;      /* Azul marino muy oscuro */
-            --accent: #2563eb;       /* Azul académico */
-            --text-main: #333333;    /* Gris oscuro lectura */
-            --text-light: #666666;   /* Gris medio */
-            --bg-paper: #ffffff;     /* Blanco papel */
-            --bg-section: #f8f9fa;   /* Gris muy tenue */
-            --border: #e2e8f0;       /* Borde sutil */
-            --code-bg: #f1f5f9;      /* Fondo código claro */
-            --chart-trad: #94a3b8;   /* Gris para tradicional */
-            --chart-ai: #2563eb;     /* Azul para IA */
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: #fdfdfd;
-            color: var(--text-main);
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        /* --- Tipografía --- */
-        h1, h2, h3, h4 {
-            font-family: 'Merriweather', serif;
-            color: var(--primary);
-        }
-
-        /* --- Header Académico --- */
-        header {
-            padding: 4rem 2rem 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-bottom: 2px solid var(--primary);
-            text-align: center;
-        }
-
-        .uni-ref {
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        .subtitle {
-            font-style: italic;
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        .authors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            padding-top: 1rem;
-            text-align: left;
-        }
-
-        .author-role {
-            font-weight: 700;
-            font-size: 0.75rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 0.2rem;
-        }
-
-        /* --- Layout Principal --- */
-        main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .intro-text {
-            text-align: justify;
-            margin-bottom: 3rem;
-            column-count: 2;
-            column-gap: 3rem;
-        }
-        
-        @media (max-width: 768px) {
-            .intro-text { column-count: 1; }
-        }
-
-        /* --- Comparativa --- */
-        .comparison-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            border: 1px solid var(--border);
-            margin-bottom: 4rem;
-            background: white;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); /* Sombra muy sutil */
-        }
-
-        @media (max-width: 768px) {
-            .comparison-section { grid-template-columns: 1fr; }
-        }
-
-        .comp-col {
-            padding: 2.5rem;
-            position: relative;
-        }
-
-        .comp-col.left {
-            border-right: 1px solid var(--border);
-        }
-
-        .comp-col.right {
-            background-color: #fafbfc; /* Fondo muy ligeramente azulado */
-        }
-
-        .col-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .col-header h2 {
-            font-size: 1.3rem;
-            margin: 0;
-        }
-
-        /* --- Elementos Gráficos SVG --- */
-        .visual-diagram {
-            height: 60px;
-            width: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Animación sutil de nodos para IA */
-        @keyframes pulse-node {
-            0% { r: 3; opacity: 0.5; }
-            50% { r: 4; opacity: 1; }
-            100% { r: 3; opacity: 0.5; }
-        }
-        
-        .ai-node {
-            animation: pulse-node 2s infinite ease-in-out;
-            fill: var(--accent);
-        }
-        
-        /* Animación de flujo */
-        @keyframes dash {
-            to { stroke-dashoffset: 0; }
-        }
-
-        .ai-connection {
-            stroke: var(--accent);
-            stroke-width: 1;
-            opacity: 0.3;
-        }
-
-        .concept-block {
-            margin-bottom: 2.5rem;
-        }
-
-        .concept-title {
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        /* --- Código Académico --- */
-        .code-snippet {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
-            background: var(--code-bg);
-            padding: 1rem;
-            border-left: 3px solid var(--accent); /* Borde lateral académico */
-            color: #24292e;
-            overflow-x: auto;
-            margin-top: 0.5rem;
-        }
-
-        .comment { color: #6a737d; font-style: italic; }
-        .keyword { color: #d73a49; }
-        .function { color: #6f42c1; }
-        .variable { color: #005cc5; }
-
-        /* --- Nueva Sección: Gráficos de Resultados --- */
-        .results-chart-section {
-            margin: 4rem 0;
-            padding: 2rem;
-            background: #fff;
-            border: 1px solid var(--border);
-        }
-
-        .chart-container {
-            margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .chart-row {
-            display: grid;
-            grid-template-columns: 150px 1fr 80px;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        @media (max-width: 600px) {
-            .chart-row { grid-template-columns: 1fr; gap: 0.5rem; }
-        }
-
-        .chart-label {
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
-
-        .bar-track {
-            height: 24px;
-            background: #f1f5f9;
-            border-radius: 2px;
+        /* Animaciones personalizadas para los acordeones */
+        .accordion-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
             overflow: hidden;
-            position: relative;
         }
-
-        .bar-fill {
-            height: 100%;
-            width: 0%; /* Start at 0 for animation */
-            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            font-size: 0.75rem;
-            color: white;
-            font-weight: bold;
+        .accordion-content.open {
+            max-height: 1000px; /* Un valor alto para asegurar que quepa el contenido */
+            opacity: 1;
         }
-
-        .bar-trad { background-color: var(--chart-trad); }
-        .bar-ai { background-color: var(--chart-ai); }
-
-        .chart-value {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            text-align: right;
+        .rotate-icon {
+            transition: transform 0.3s ease;
         }
-
-        /* --- Sección Técnica --- */
-        .tech-specs {
-            background-color: #fff;
-            border-top: 2px solid var(--border);
-            padding-top: 2rem;
-            margin-top: 2rem;
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        .spec-item h4 {
-            font-size: 0.95rem;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .spec-list {
-            list-style: none;
-            font-size: 0.9rem;
-        }
-
-        .spec-list li {
-            margin-bottom: 0.4rem;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .spec-val { font-family: 'Fira Code', monospace; color: var(--text-main); }
-        .spec-key { color: var(--text-light); }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 2px 8px;
-            background: #eef2ff;
-            color: var(--accent);
-            font-size: 0.75rem;
-            font-weight: 700;
-            border: 1px solid #c7d2fe;
-            border-radius: 2px;
-            margin-bottom: 0.5rem;
+        .open .rotate-icon {
+            transform: rotate(180deg);
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased p-4 md:p-8">
 
-    <header>
-        <div class="uni-ref">Universidad Andina del Cusco | Facultad de Ingeniería y Arquitectura</div>
-        <h1>Análisis Comparativo: Programación Tradicional vs. Inteligencia Artificial</h1>
-        <p class="subtitle">Estudio de caso aplicado a la predicción de precios inmobiliarios</p>
+    <div class="max-w-7xl mx-auto">
         
-        <div class="authors-grid">
-            <div>
-                <span class="author-role">Investigadores</span>
-                Morales Ttito Honorio<br>
-                Torres Cáceres Sayo Michael<br>
-                Zavaleta Luna Sebastian
-            </div>
-            <div>
-                <span class="author-role">Docente</span>
-                Mg. Ing. Hugo Espetia Huamanga
-            </div>
-            <div>
-                <span class="author-role">Asignatura</span>
-                Inteligencia Artificial (Grupo HABA)
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <!-- Resumen Ejecutivo -->
-        <div class="intro-text">
-            <p><strong>Resumen.</strong> Este documento presenta una comparación técnica entre los paradigmas de desarrollo de software tradicional y los sistemas basados en aprendizaje automático (Machine Learning). El estudio se centra en la implementación de un modelo de predicción de precios inmobiliarios.</p>
-            <p>Mientras que el enfoque tradicional requiere la definición explícita de reglas matemáticas, el enfoque inteligente utiliza Redes Neuronales Artificiales (Feedforward) para inferir patrones no lineales a partir de un conjunto de datos histórico, utilizando la librería TensorFlow.</p>
-        </div>
-
-        <!-- Tabla Comparativa Principal -->
-        <div class="comparison-section">
-            
-            <!-- Columna Izquierda: Tradicional -->
-            <div class="comp-col left">
-                <div class="col-header">
-                    <!-- SVG Diagram: Linear Regression (Static) -->
-                    <div class="visual-diagram">
-                        <svg width="50" height="50" viewBox="0 0 50 50">
-                            <line x1="5" y1="45" x2="45" y2="45" stroke="#333" stroke-width="2" />
-                            <line x1="5" y1="45" x2="5" y2="5" stroke="#333" stroke-width="2" />
-                            <!-- Puntos de datos -->
-                            <circle cx="15" cy="35" r="2" fill="#94a3b8" />
-                            <circle cx="25" cy="25" r="2" fill="#94a3b8" />
-                            <circle cx="35" cy="15" r="2" fill="#94a3b8" />
-                            <!-- Línea de regresión -->
-                            <line x1="5" y1="40" x2="45" y2="10" stroke="#2563eb" stroke-width="2" stroke-dasharray="4" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Enfoque Tradicional</h2>
-                        <small style="color:var(--text-light)">Regresión Lineal Simple</small>
-                    </div>
-                </div>
-
-                <div class="concept-block">
-                    <div class="tag">Paradigma</div>
-                    <h3>Determinista / Paramétrico</h3>
-                    <p>Se basa en la causalidad directa. El programador debe conocer la relación exacta entre las variables (ej. tamaño de la casa) y el resultado (precio) para codificarla.</p>
-                </div>
-
-                <div class="concept-block">
-                    <div class="tag">Implementación</div>
-                    <h3>Lógica Explícita</h3>
-                    <p>Requiere mantenimiento manual de las reglas de negocio. No tolera bien el "ruido" en los datos.</p>
-                    <div class="code-snippet">
-<span class="comment"># Regla fija definida por humano</span>
-<span class="keyword">def</span> <span class="function">calcular_precio</span>(m2, habs):
-    base = 50000
-    <span class="comment"># Coeficientes estáticos</span>
-    <span class="keyword">return</span> base + (m2 * 1000)
-                    </div>
-                </div>
-            </div>
-
-            <!-- Columna Derecha: IA -->
-            <div class="comp-col right">
-                <div class="col-header">
-                    <!-- SVG Diagram: Neural Network (Animated) -->
-                    <div class="visual-diagram">
-                        <svg width="50" height="50" viewBox="0 0 50 50">
-                            <!-- Conexiones -->
-                            <line x1="10" y1="15" x2="25" y2="25" class="ai-connection" />
-                            <line x1="10" y1="35" x2="25" y2="25" class="ai-connection" />
-                            <line x1="25" y1="25" x2="40" y2="25" class="ai-connection" />
-                            <!-- Nodos Input -->
-                            <circle cx="10" cy="15" r="3" fill="#cbd5e1" />
-                            <circle cx="10" cy="35" r="3" fill="#cbd5e1" />
-                            <!-- Nodos Ocultos (Animados) -->
-                            <circle cx="25" cy="25" class="ai-node" style="animation-delay: 0s" />
-                            <!-- Nodo Output -->
-                            <circle cx="40" cy="25" class="ai-node" style="animation-delay: 0.5s" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Enfoque Inteligente</h2>
-                        <small style="color:var(--text-light)">Red Neuronal (Deep Learning)</small>
-                    </div>
-                </div>
-
-                <div class="concept-block">
-                    <div class="tag">Paradigma</div>
-                    <h3>Probabilístico / Aprendizaje Profundo</h3>
-                    <p>Utiliza Redes Neuronales Artificiales (RNA). El sistema infiere las reglas analizando miles de ejemplos (Input/Output).</p>
-                </div>
-
-                <div class="concept-block">
-                    <div class="tag">Implementación</div>
-                    <h3>Entrenamiento de Modelo</h3>
-                    <p>Se utiliza el algoritmo de Backpropagation para minimizar el error de predicción iterativamente.</p>
-                    <div class="code-snippet">
-<span class="comment"># La red descubre los coeficientes</span>
-model = tf.keras.Sequential([
-  layers.<span class="function">Dense</span>(64, activation=<span class="variable">'relu'</span>),
-  layers.<span class="function">Dense</span>(1)
-])
-model.<span class="function">fit</span>(datos, precios, epochs=100)
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Nueva Sección: Resultados Experimentales -->
-        <section class="results-chart-section">
-            <h3 style="margin-bottom: 0.5rem;"><i class="ph ph-chart-bar"></i> Resultados Experimentales</h3>
-            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 2rem;">
-                Comparativa del Error Cuadrático Medio (MSE) tras procesar el conjunto de datos de prueba.
-                <br><em>Nota: Un valor menor indica mayor precisión en la predicción de precios.</em>
+        <!-- Encabezado -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+                Evolución de la <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-500 via-pink-500 to-orange-500">Inteligencia Artificial</span>
+            </h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                De sistemas rígidos basados en reglas hacia agentes autónomos capaces de razonar y ejecutar acciones. Descubre cómo la IA está redefiniendo los límites de la tecnología.
             </p>
+        </header>
 
-            <div class="chart-container">
-                <!-- Fila 1 -->
-                <div class="chart-row">
-                    <span class="chart-label">Modelo Tradicional</span>
-                    <div class="bar-track">
-                        <div class="bar-fill bar-trad" style="width: 85%">MSE Alto</div>
-                    </div>
-                    <span class="chart-value">15,400</span>
+        <!-- Cuadrícula Principal (3 Columnas) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+
+            <!-- COLUMNA 1: IA TRADICIONAL -->
+            <div class="bg-white rounded-3xl shadow-xl border border-green-100 overflow-hidden flex flex-col">
+                <div class="bg-gradient-to-br from-green-400 to-green-600 p-6 text-center text-white relative overflow-hidden">
+                    <div class="text-5xl mb-2 relative z-10">⚙️</div>
+                    <h2 class="text-2xl font-bold relative z-10">IA Tradicional</h2>
+                    <p class="text-green-100 font-medium text-sm relative z-10">Estrecha / Simbólica / GOFAI</p>
+                    <!-- Decoración de fondo -->
+                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"></div>
                 </div>
-                <!-- Fila 2 -->
-                <div class="chart-row">
-                    <span class="chart-label">Modelo IA (TensorFlow)</span>
-                    <div class="bar-track">
-                        <div class="bar-fill bar-ai" style="width: 15%">MSE Bajo</div>
+                
+                <div class="p-6 flex-grow space-y-4">
+                    <p class="text-sm text-gray-600 italic border-l-4 border-green-500 pl-3">
+                        Sistema basado en reglas lógicas y algoritmos deterministas para tareas preprogramadas (Top-down).
+                    </p>
+
+                    <!-- Acordeones IA Tradicional -->
+                    <div class="space-y-2">
+                        <button class="accordion-btn w-full bg-green-50 hover:bg-green-100 text-green-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Diferencias Clave</span>
+                            <svg class="w-5 h-5 rotate-icon text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2">
+                            <p><strong>Capacidad:</strong> Analiza datos y predice (no crea).</p>
+                            <p><strong>Flexibilidad:</strong> Rígida, requiere intervención manual para nuevos escenarios.</p>
+                            <p><strong>Naturaleza:</strong> Reactiva y discriminativa (clasifica info existente).</p>
+                        </div>
+
+                        <button class="accordion-btn w-full bg-green-50 hover:bg-green-100 text-green-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Linajes y Modelos</span>
+                            <svg class="w-5 h-5 rotate-icon text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2">
+                            <p><strong>Simbólico:</strong> Lógica SI-ENTONCES (Ej. SOAR, BDI).</p>
+                            <p><strong>Estadístico (ML):</strong> Regresión, árboles de decisión, SVM. Entrenados con datos estructurados.</p>
+                        </div>
+
+                        <button class="accordion-btn w-full bg-green-50 hover:bg-green-100 text-green-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Casos de Uso y Límites</span>
+                            <svg class="w-5 h-5 rotate-icon text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2 pb-2">
+                            <ul class="list-disc pl-4 space-y-1">
+                                <li><strong>Finanzas:</strong> Riesgo crediticio, scoring.</li>
+                                <li><strong>Salud:</strong> Sistemas expertos (MYCIN).</li>
+                                <li><strong>Industria:</strong> Mantenimiento preventivo, RPA.</li>
+                            </ul>
+                            <p class="mt-2 pt-2 border-t border-green-200"><strong>Limitación:</strong> No razona. Falla si el problema se desvía de las reglas. Simulaciones "what-if" preconfiguradas.</p>
+                        </div>
                     </div>
-                    <span class="chart-value">2,150</span>
                 </div>
             </div>
-        </section>
 
-        <!-- Sección de Especificaciones Técnicas -->
-        <section class="tech-specs">
-            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Especificaciones del Entorno Experimental</h2>
-            <div class="specs-grid">
-                <!-- Hardware -->
-                <div class="spec-item">
-                    <h4><i class="ph ph-cpu"></i> Hardware</h4>
-                    <ul class="spec-list">
-                        <li><span class="spec-key">CPU:</span> <span class="spec-val">Intel i7-10700K</span></li>
-                        <li><span class="spec-key">RAM:</span> <span class="spec-val">16 GB DDR4</span></li>
-                    </ul>
+            <!-- COLUMNA 2: IA GENERATIVA -->
+            <div class="bg-white rounded-3xl shadow-xl border border-pink-100 overflow-hidden flex flex-col relative transform md:-translate-y-4">
+                <!-- Highlight badge -->
+                <div class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-xl z-20 shadow-sm">El Presente</div>
+                
+                <div class="bg-gradient-to-br from-pink-400 to-purple-600 p-6 text-center text-white relative overflow-hidden">
+                    <div class="text-5xl mb-2 relative z-10">✨</div>
+                    <h2 class="text-2xl font-bold relative z-10">IA Generativa</h2>
+                    <p class="text-pink-100 font-medium text-sm relative z-10">Creación / Deep Learning</p>
+                    <div class="absolute -left-6 -top-6 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"></div>
                 </div>
-                <!-- Software -->
-                <div class="spec-item">
-                    <h4><i class="ph ph-code"></i> Software Stack</h4>
-                    <ul class="spec-list">
-                        <li><span class="spec-key">Lang:</span> <span class="spec-val">Python 3.10</span></li>
-                        <li><span class="spec-key">Lib:</span> <span class="spec-val">TensorFlow 2.15</span></li>
-                    </ul>
-                </div>
-                <!-- Comandos -->
-                <div class="spec-item">
-                    <h4><i class="ph ph-terminal"></i> Ejecución</h4>
-                    <div class="code-snippet" style="background: #fff; border: none; padding: 0; margin:0;">
-$ python3 generador_datos.py
-$ python3 solucion_ia.py
+                
+                <div class="p-6 flex-grow space-y-4">
+                    <p class="text-sm text-gray-600 italic border-l-4 border-pink-500 pl-3">
+                        Aprende patrones complejos a partir de vastos datos para generar contenido original (texto, imagen, código).
+                    </p>
+
+                    <!-- Acordeones IA Generativa -->
+                    <div class="space-y-2">
+                        <button class="accordion-btn w-full bg-pink-50 hover:bg-pink-100 text-pink-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Mecanismo y Diferencias</span>
+                            <svg class="w-5 h-5 rotate-icon text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2">
+                            <p><strong>Mecanismo:</strong> Deep learning y Transformers (mecanismos de atención). Predice probabilidades.</p>
+                            <p><strong>Capacidad Creativa:</strong> Crea instancias de datos que antes no existían.</p>
+                            <p><strong>Aprendizaje:</strong> "Aprende a aprender", maneja datos no estructurados.</p>
+                        </div>
+
+                        <button class="accordion-btn w-full bg-pink-50 hover:bg-pink-100 text-pink-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Modelos Principales</span>
+                            <svg class="w-5 h-5 rotate-icon text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2">
+                            <p><strong>1. Transformers:</strong> GPT-4, Claude (contexto global de texto).</p>
+                            <p><strong>2. GANs:</strong> Generador vs Discriminador (imágenes/videos realistas).</p>
+                            <p><strong>3. VAE:</strong> Comprime y decodifica con aleatoriedad.</p>
+                        </div>
+
+                        <button class="accordion-btn w-full bg-pink-50 hover:bg-pink-100 text-pink-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Casos de Uso y Límites</span>
+                            <svg class="w-5 h-5 rotate-icon text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2 pb-2">
+                            <ul class="list-disc pl-4 space-y-1">
+                                <li><strong>Finanzas:</strong> Análisis multi-periodo masivo, detección de fraudes complejos.</li>
+                                <li><strong>Energía:</strong> Simuladores de descarbonización.</li>
+                                <li><strong>Tech/Diseño:</strong> Copilotos de código, arte digital.</li>
+                            </ul>
+                            <p class="mt-2 pt-2 border-t border-pink-200"><strong>Límites:</strong> Alucinaciones (datos inventados), opacidad (caja negra) y alto consumo de recursos.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-    </main>
+            <!-- COLUMNA 3: IA AGÉNTICA -->
+            <div class="bg-white rounded-3xl shadow-xl border border-orange-100 overflow-hidden flex flex-col">
+                <div class="bg-gradient-to-br from-orange-400 to-yellow-500 p-6 text-center text-white relative overflow-hidden">
+                    <div class="text-5xl mb-2 relative z-10">🤖</div>
+                    <h2 class="text-2xl font-bold relative z-10">IA Agéntica</h2>
+                    <p class="text-orange-100 font-medium text-sm relative z-10">Autónoma / Proactiva</p>
+                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white opacity-20 rounded-full blur-2xl"></div>
+                </div>
+                
+                <div class="p-6 flex-grow space-y-4">
+                    <p class="text-sm text-gray-600 italic border-l-4 border-orange-500 pl-3">
+                        Sistema capaz de lograr objetivos con mínima supervisión, actuando de manera independiente e intencional.
+                    </p>
 
-    <footer>
-        <p>Documento generado para fines académicos &copy; 2026. Basado en el informe "Sistema tradicional vs sistema inteligente Final".</p>
-    </footer>
+                    <!-- Acordeones IA Agéntica -->
+                    <div class="space-y-2">
+                        <button class="accordion-btn w-full bg-orange-50 hover:bg-orange-100 text-orange-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Diferencias Clave</span>
+                            <svg class="w-5 h-5 rotate-icon text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2">
+                            <p><strong>Proactividad:</strong> Inicia acciones por sí misma (vs. reactiva).</p>
+                            <p><strong>Acción vs Creación:</strong> Usa el contenido para ejecutar tareas (ej. reservar vuelos, herramientas externas).</p>
+                            <p><strong>Adaptabilidad:</strong> Ajusta su estrategia y aprende de errores.</p>
+                        </div>
 
+                        <button class="accordion-btn w-full bg-orange-50 hover:bg-orange-100 text-orange-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Arquitecturas/Frameworks</span>
+                            <svg class="w-5 h-5 rotate-icon text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2">
+                            <p>Mezcla linajes simbólicos y neuronales (LLMs como "cerebros").</p>
+                            <ul class="list-disc pl-4 space-y-1">
+                                <li><strong>LangChain:</strong> Cadenas de razonamiento.</li>
+                                <li><strong>AutoGen:</strong> Diálogos multi-agente.</li>
+                                <li><strong>CrewAI:</strong> Flujos basados en roles.</li>
+                            </ul>
+                        </div>
+
+                        <button class="accordion-btn w-full bg-orange-50 hover:bg-orange-100 text-orange-800 rounded-xl p-4 flex justify-between items-center font-semibold transition-colors">
+                            <span>Casos de Uso y Seguridad</span>
+                            <svg class="w-5 h-5 rotate-icon text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-600 space-y-2 pb-2">
+                            <ul class="list-disc pl-4 space-y-1">
+                                <li><strong>Ciberseguridad:</strong> Vigilancia 24/7, neutraliza ataques solos.</li>
+                                <li><strong>Salud/Finanzas:</strong> Monitoreo continuo y ajustes en tiempo real.</li>
+                            </ul>
+                            <p class="mt-2 pt-2 border-t border-orange-200"><strong>Simulaciones:</strong> Se usan "Red Teams" y simulaciones para ensayar y alinear éticamente al agente antes de lanzarlo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECCIÓN DE PREGUNTAS FRECUENTES (Basadas en las consultas del usuario) -->
+        <div class="bg-gray-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-center">Consultas Específicas: Casos Prácticos</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- FAQ 1 -->
+                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                    <h4 class="font-bold text-blue-400 mb-2">¿Cómo ayuda la IA Tradicional en la transición energética?</h4>
+                    <p class="text-gray-300 text-sm">A través de sistemas analíticos y reglas predefinidas, optimiza el mantenimiento preventivo de infraestructuras (como turbinas eólicas) basándose en sensores de tiempo/uso, previniendo fallas antes de que ocurran.</p>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                    <h4 class="font-bold text-green-400 mb-2">¿Qué es un sistema experto y cómo detecta fraudes?</h4>
+                    <p class="text-gray-300 text-sm">Es una IA Tradicional (Simbólica) que contiene una base de conocimientos humanos. Detecta fraudes usando reglas estáticas (ej. "SI transacción > $5000 en país inusual, ENTONCES bloquear").</p>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-pink-500 transition-colors">
+                    <h4 class="font-bold text-pink-400 mb-2">Ejemplos de IA Generativa en finanzas y energía</h4>
+                    <p class="text-gray-300 text-sm"><strong>Finanzas:</strong> Generación de reportes contextualizados procesando décadas de datos en segundos. <strong>Energía:</strong> Creación de simuladores hiperrealistas de escenarios de descarbonización para metas de "cero emisiones".</p>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-orange-500 transition-colors">
+                    <h4 class="font-bold text-orange-400 mb-2">¿Cómo se garantiza la seguridad en la IA Agéntica?</h4>
+                    <p class="text-gray-300 text-sm">Se utilizan simulaciones interactivas y "Red Teams" autónomos (agentes atacantes) para ensayar comportamientos, exponer fallos y asegurar que el agente esté alineado con los valores y normas de la empresa antes de actuar en el mundo real.</p>
+                </div>
+
+                <!-- NUEVO: Simulaciones Interactivas -->
+                <div class="md:col-span-2 bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-6 border border-gray-600 hover:border-purple-500 transition-colors">
+                    <h4 class="font-bold text-purple-400 mb-4 text-xl">🎮 Pruébalo tú mismo: Evolución de las Simulaciones</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 border-t border-gray-600 pt-6">
+                        
+                        <!-- Simulación Tradicional -->
+                        <div class="flex flex-col h-full">
+                            <span class="text-green-400 font-semibold block mb-2 text-sm uppercase tracking-wider">IA Tradicional</span>
+                            <p class="text-gray-300 text-xs mb-4 flex-grow">Simulación determinista basada en reglas. Si la variable cruza un umbral, se ejecuta una acción predefinida.</p>
+                            <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 mt-auto">
+                                <label class="text-xs text-gray-400 flex justify-between mb-2">Temp. de Turbina: <span id="temp-val" class="text-green-400 font-bold">50°C</span></label>
+                                <input type="range" id="temp-slider" min="20" max="120" value="50" class="w-full accent-green-500 cursor-pointer">
+                                <div id="temp-alert" class="mt-3 text-xs text-center p-2 rounded bg-green-900/50 text-green-300 border border-green-700/50 transition-colors">Regla: Operación Normal</div>
+                            </div>
+                        </div>
+
+                        <!-- Simulación Generativa -->
+                        <div class="flex flex-col h-full">
+                            <span class="text-pink-400 font-semibold block mb-2 text-sm uppercase tracking-wider">IA Generativa</span>
+                            <p class="text-gray-300 text-xs mb-4 flex-grow">Aumento de datos. El modelo aprende la distribución de datos reales (azul) y genera datos sintéticos (rosa).</p>
+                            <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 mt-auto">
+                                <div id="gen-space" class="h-14 w-full bg-black rounded border border-gray-700 relative overflow-hidden mb-3 shadow-inner">
+                                    <!-- Datos Reales -->
+                                    <div class="absolute w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_5px_blue]" style="left: 40%; top: 40%;"></div>
+                                    <div class="absolute w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_5px_blue]" style="left: 45%; top: 55%;"></div>
+                                    <div class="absolute w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_5px_blue]" style="left: 55%; top: 45%;"></div>
+                                </div>
+                                <button id="btn-gen" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs py-2 rounded transition-colors shadow-lg active:scale-95">Generar Sintéticos</button>
+                            </div>
+                        </div>
+
+                        <!-- Simulación Agéntica -->
+                        <div class="flex flex-col h-full">
+                            <span class="text-orange-400 font-semibold block mb-2 text-sm uppercase tracking-wider">IA Agéntica</span>
+                            <p class="text-gray-300 text-xs mb-4 flex-grow">Entorno "Red Team". El agente ofensivo ataca aleatoriamente, el defensivo se adapta de forma autónoma.</p>
+                            <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 mt-auto">
+                                <div class="h-14 w-full bg-black rounded border border-gray-700 relative overflow-hidden mb-3 flex items-center shadow-inner">
+                                    <div id="agent-hacker" class="absolute left-2 text-sm transition-all duration-500 ease-in-out z-10">👾</div>
+                                    <div id="agent-shield" class="absolute right-6 w-1.5 h-6 bg-blue-500/50 rounded transition-all duration-300 ease-in-out"></div>
+                                </div>
+                                <button id="btn-agent" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs py-2 rounded transition-colors shadow-lg active:scale-95">Simular Ataque</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script para los Acordeones e Interactividad -->
     <script>
-        // Animación simple de las barras al cargar
         document.addEventListener('DOMContentLoaded', () => {
-            const bars = document.querySelectorAll('.bar-fill');
-            bars.forEach(bar => {
-                const targetWidth = bar.style.width;
-                bar.style.width = '0%';
+            // LÓGICA DE LOS ACORDEONES
+            const accordions = document.querySelectorAll('.accordion-btn');
+
+            accordions.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const isOpen = content.classList.contains('open');
+                    
+                    if (isOpen) {
+                        content.classList.remove('open');
+                        content.style.paddingTop = '0px';
+                        content.style.paddingBottom = '0px';
+                        button.parentElement.classList.remove('open'); 
+                    } else {
+                        content.classList.add('open');
+                        content.style.paddingTop = '8px';
+                        content.style.paddingBottom = '8px';
+                        button.parentElement.classList.add('open'); 
+                    }
+                });
+            });
+
+            // LÓGICA DE SIMULACIÓN TRADICIONAL
+            const slider = document.getElementById('temp-slider');
+            const tempVal = document.getElementById('temp-val');
+            const tempAlert = document.getElementById('temp-alert');
+            
+            slider.addEventListener('input', (e) => {
+                const v = parseInt(e.target.value);
+                tempVal.innerText = v + '°C';
+                
+                if (v > 90) {
+                    tempVal.className = 'text-red-500 font-bold';
+                    tempAlert.className = 'mt-3 text-xs text-center p-2 rounded bg-red-900/50 text-red-300 border border-red-700/50 transition-colors';
+                    tempAlert.innerText = 'REGLA ACTIVADA: ¡Apagar Turbina!';
+                } else if (v > 75) {
+                    tempVal.className = 'text-yellow-400 font-bold';
+                    tempAlert.className = 'mt-3 text-xs text-center p-2 rounded bg-yellow-900/50 text-yellow-300 border border-yellow-700/50 transition-colors';
+                    tempAlert.innerText = 'Advertencia: Temperatura Elevada';
+                } else {
+                    tempVal.className = 'text-green-400 font-bold';
+                    tempAlert.className = 'mt-3 text-xs text-center p-2 rounded bg-green-900/50 text-green-300 border border-green-700/50 transition-colors';
+                    tempAlert.innerText = 'Regla: Operación Normal';
+                }
+            });
+
+            // LÓGICA DE SIMULACIÓN GENERATIVA
+            const btnGen = document.getElementById('btn-gen');
+            const genSpace = document.getElementById('gen-space');
+            
+            btnGen.addEventListener('click', () => {
+                // Limpiar puntos viejos si hay muchos (para no saturar)
+                const oldDots = genSpace.querySelectorAll('.synth-dot');
+                if (oldDots.length > 20) {
+                    oldDots.forEach(d => d.remove());
+                }
+
+                // Crear 3 puntos nuevos cerca del centro (patrón)
+                for(let i=0; i<3; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'synth-dot absolute w-2 h-2 bg-pink-400 rounded-full shadow-[0_0_8px_#f472b6] opacity-0 transition-opacity duration-500';
+                    
+                    // Distribuir estadísticamente alrededor de 30%-60%
+                    const left = 35 + Math.random() * 30;
+                    const top = 25 + Math.random() * 50;
+                    
+                    dot.style.left = left + '%';
+                    dot.style.top = top + '%';
+                    genSpace.appendChild(dot);
+                    
+                    // Trigger fade in
+                    setTimeout(() => dot.classList.remove('opacity-0'), 50);
+                }
+            });
+
+            // LÓGICA DE SIMULACIÓN AGÉNTICA
+            const btnAgent = document.getElementById('btn-agent');
+            const hacker = document.getElementById('agent-hacker');
+            const shield = document.getElementById('agent-shield');
+            let isAttacking = false;
+            
+            btnAgent.addEventListener('click', () => {
+                if(isAttacking) return;
+                isAttacking = true;
+                
+                // 1. El atacante elige una ruta Y aleatoria
+                const attackY = (Math.random() * 24 - 12); // Desplazamiento arriba/abajo
+                hacker.style.transform = `translate(0px, ${attackY}px)`;
+                
                 setTimeout(() => {
-                    bar.style.width = targetWidth;
-                }, 300);
+                    // 2. El atacante avanza hacia la derecha
+                    const parentWidth = hacker.parentElement.offsetWidth;
+                    hacker.style.transform = `translate(${parentWidth - 60}px, ${attackY}px)`;
+                    
+                    // 3. El escudo detecta la anomalía y se mueve proactivamente
+                    setTimeout(() => {
+                        shield.style.opacity = '1';
+                        shield.style.transform = `translateY(${attackY}px) scaleY(1.8)`;
+                        shield.classList.replace('bg-blue-500/50', 'bg-orange-500');
+                        shield.style.boxShadow = '0 0 15px #f97316';
+                    }, 200);
+
+                    // 4. Reset del entorno
+                    setTimeout(() => {
+                        hacker.style.transform = `translate(0px, 0px)`;
+                        shield.style.opacity = '0.5';
+                        shield.style.transform = `translateY(0px) scaleY(1)`;
+                        shield.classList.replace('bg-orange-500', 'bg-blue-500/50');
+                        shield.style.boxShadow = 'none';
+                        isAttacking = false;
+                    }, 1200);
+                }, 100);
             });
         });
     </script>
-
 </body>
 </html>
